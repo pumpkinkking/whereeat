@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -32,8 +33,13 @@ const Header: React.FC = () => {
       >
         <Ionicons name="menu" size={28} color="#333" />
       </TouchableOpacity>
-      <View style={styles.headerCenter}>
-        <Text style={styles.headerTitle}>行程</Text>
+      <View style={styles.searchContainer}>
+        <Ionicons name="search" size={18} color="#999" style={styles.searchIcon} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="搜索行程"
+          placeholderTextColor="#999"
+        />
       </View>
       <View style={styles.headerRight} />
     </View>
@@ -144,9 +150,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingBottom: 12,
-    backgroundColor: '#fff',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#e0e0e0',
+    backgroundColor: '#f8f8f8',
   },
   menuButton: {
     width: 44,
@@ -154,14 +158,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  headerCenter: {
+  searchContainer: {
     flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    height: 38,
+    marginHorizontal: 8,
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 15,
     color: '#333',
+    padding: 0,
   },
   headerRight: {
     width: 44,

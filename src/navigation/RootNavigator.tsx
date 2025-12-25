@@ -47,7 +47,7 @@ const DrawerNavigator: React.FC = () => {
           width: '80%',
         },
         swipeEnabled: true,
-        swipeEdgeWidth: 50,
+        swipeEdgeWidth: 80,
       }}
     >
       <Drawer.Screen name="Main" component={TabNavigator} />
