@@ -1,36 +1,80 @@
 import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RootStackParamList } from './types';
-import { MainTabsNavigator } from './MainTabsNavigator';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-// 导入实际的屏幕组件
-import { LoginScreen } from '../screens/auth/LoginScreen';
-import { RegisterScreen } from '../screens/auth/RegisterScreen';
-import { FoodDetailScreen } from '../screens/food/FoodDetailScreen';
+import { TripScreen, RadarScreen } from '../screens';
+import { CustomTabBar, DrawerContent } from '../components';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
 /**
- * 应用根导航组件
- * 包含主标签页导航和其他全屏页面导航
+ * 空白占位页面（用于中间的+按钮）
  */
-export const RootNavigator = () => {
+const AddPlaceholder: React.FC = () => <View style={styles.placeholder} />;
+
+/**
+ * 底部Tab导航器
+ */
+const TabNavigator: React.FC = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        {/* 主标签页导航 */}
-        <Stack.Screen name="MainTabs" component={MainTabsNavigator} />
-        {/* 认证相关页面 */}
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        {/* 详情页面 */}
-        <Stack.Screen name="FoodDetail" component={FoodDetailScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator
+      tabBar={(props) => <CustomTabBar {...props} />}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Tab.Screen name="Trip" component={TripScreen} />
+      <Tab.Screen name="Add" component={AddPlaceholder} />
+      <Tab.Screen name="Radar" component={RadarScreen} />
+    </Tab.Navigator>
   );
 };
+
+/**
+ * 抽屉导航器（包含侧边栏）
+ */
+const DrawerNavigator: React.FC = () => {
+  return (
+    <Drawer.Navigator
+      drawerContent={(props) => <DrawerContent {...props} />}
+      screenOptions={{
+        headerShown: false,
+        drawerType: 'front',
+        drawerStyle: {
+          width: '80%',
+        },
+        swipeEnabled: true,
+        swipeEdgeWidth: 50,
+      }}
+    >
+      <Drawer.Screen name="Main" component={TabNavigator} />
+    </Drawer.Navigator>
+  );
+};
+
+/**
+ * 根导航器
+ * 集成抽屉导航和手势处理
+ */
+export const RootNavigator: React.FC = () => {
+  return (
+    <GestureHandlerRootView style={styles.container}>
+      <NavigationContainer>
+        <DrawerNavigator />
+      </NavigationContainer>
+    </GestureHandlerRootView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  placeholder: {
+    flex: 1,
+  },
+});
