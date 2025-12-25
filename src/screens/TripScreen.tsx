@@ -94,18 +94,15 @@ const FutureTripsView: React.FC<{ trips: Trip[] }> = ({ trips }) => {
   return (
     <View style={styles.futureTripsContainer}>
       <Text style={styles.sectionTitle}>即将到来</Text>
-      <FlatList
-        data={trips}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
+      <View style={styles.tripList}>
+        {trips.map((item) => (
           <TripCard
+            key={item.id}
             trip={item}
             onPress={() => console.log(`点击了行程: ${item.name}`)}
           />
-        )}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.tripList}
-      />
+        ))}
+      </View>
     </View>
   );
 };

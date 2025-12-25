@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { TripScreen, RadarScreen } from '../screens';
 import { CustomTabBar, DrawerContent } from '../components';
@@ -58,15 +57,13 @@ const DrawerNavigator: React.FC = () => {
 
 /**
  * 根导航器
- * 集成抽屉导航和手势处理
+ * 集成抽屉导航
  */
 export const RootNavigator: React.FC = () => {
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <NavigationContainer>
-        <DrawerNavigator />
-      </NavigationContainer>
-    </GestureHandlerRootView>
+    <NavigationContainer>
+      <DrawerNavigator />
+    </NavigationContainer>
   );
 };
 
